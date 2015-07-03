@@ -4,6 +4,47 @@
 #define __JKLIB_TYPE_TRAIT_H__
 
 //////////////////////////////////////////////////////////////////////////
+// Accept
+typedef struct TrueType {} TrueType;
+typedef struct FalseType {} FalseType;
+
+template <typename TrueOrFalse, typename T>
+struct AcceptType
+{
+
+};
+
+template <typename T>
+struct AcceptType<TrueType, T>
+{
+	typedef T Type;
+};
+
+template <typename T>
+struct AcceptValue
+{
+	static const bool accept = false;
+};
+
+template <>
+struct AcceptValue<TrueType>
+{
+	static const bool accept = true;
+};
+
+template <typename TrueOrFalse, typename T, typename U>
+struct OptionType
+{
+	typedef T Type;
+};
+
+template <typename T, typename U>
+struct OptionType<TrueType, T, U>
+{
+	typedef U Type;
+};
+
+//////////////////////////////////////////////////////////////////////////
 // Reference
 template <typename T>
 struct RemoveReference
@@ -35,6 +76,18 @@ template <typename T>
 struct RemoveConst<const T>
 {
 	typedef T Type;
+};
+
+template <typename T>
+struct IsConst
+{
+	typedef FalseType Result;
+};
+
+template <typename T>
+struct IsConst<const T>
+{
+	typedef TrueType Result;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -106,5 +159,6 @@ typename RemoveReference<T>::Type&& ForwardValue(T&& val)
 {
 	return static_cast<RemoveReference<T>::Type&&>(val);
 }
+
 
 #endif //!__JKLIB_TYPE_TRAIT_H__

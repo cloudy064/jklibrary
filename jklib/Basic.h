@@ -113,32 +113,6 @@ public:
 	NoCopyable& operator=(NoCopyable&&) = delete;
 };
 
-typedef struct TrueType {} TrueType;
-typedef struct FalseType {} FalseType;
-
-template <typename T, typename AcceptOrNot>
-struct AcceptType
-{
-
-};
-
-template <typename T>
-struct AcceptType<T, TrueType>
-{
-	typedef T Type;
-};
-
-template <typename T>
-struct AcceptValue
-{
-	static const bool accept = false;
-};
-
-template <>
-struct AcceptValue<TrueType>
-{
-	static const bool accept = true;
-};
 
 JKLIB_MODULE_END(Basic)
 

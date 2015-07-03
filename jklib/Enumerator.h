@@ -4,18 +4,16 @@
 #define __JKLIB_ENUMERATOR_H__
 
 template <typename T>
-class IContainer;
-
-template <typename T>
 class IEnumerator
 {
-	typedef IContainer<T> ContainerType;
+public:
+	virtual ~IEnumerator() {}
 
 public:
-
-
-private:
-
+	virtual void Next() = 0;
+	virtual T& Reference() = 0;
+	virtual bool IsValid() const = 0;
+	virtual void Reset() = 0;
 };
 
 #endif //!__JKLIB_ENUMERATOR_H__
